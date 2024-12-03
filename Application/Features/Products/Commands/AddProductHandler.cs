@@ -3,7 +3,7 @@ using MinimalApiCleanArchitectureDemo.Domain.Entities;
 
 namespace MinimalApiCleanArchitectureDemo.Application.Features.Products.Commands;
 
-public class AddProductHandler : IRequestHandler<AddProductCommand, int>
+public class AddProductHandler : IRequestHandler<AddProductCommand, Product>
 {
     private readonly AppDbContext _context;
 
@@ -12,7 +12,7 @@ public class AddProductHandler : IRequestHandler<AddProductCommand, int>
         _context = context;
     }
 
-    public async Task<int> Handle(AddProductCommand request, CancellationToken cancellationToken)
+    public async Task<Product> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product
         {
@@ -23,6 +23,6 @@ public class AddProductHandler : IRequestHandler<AddProductCommand, int>
         _context.Products.Add(product);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return product.Id;
+        return product;
     }
 }
